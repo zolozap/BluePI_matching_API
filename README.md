@@ -6,3 +6,6 @@ sudo pip install virtualenv
 virtualenv {{env_name}}
 # Use env
 source {{env_name}}/bin/activate
+
+# Install package
+pip install -r requirements.txt
