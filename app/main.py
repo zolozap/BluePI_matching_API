@@ -61,6 +61,7 @@ async def get_current_active_user(current_user: User = Depends(get_current_user)
 
 @app.post("/register", status_code=status.HTTP_201_CREATED)
 async def create_new_users(users:User):
+    users.hashed_password = get_password_hash(users.hashed_password)
     results = create_users(users.dict())
     return {'results':results}
 
