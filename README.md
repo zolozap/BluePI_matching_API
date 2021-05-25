@@ -6,6 +6,9 @@
 <a href="https://pypi.org/project/fastapi" target="new">
     <img src="https://img.shields.io/pypi/v/fastapi?color=%2334D058&label=pypi%20package" alt="Package version">
 </a>
+<a href="https://ubuntu.com/" target="new">
+    <img src="https://img.shields.io/badge/ubuntu-v18.04.1--0ubuntu1-blue" alt="Ubuntu">
+</a>
 <a href="https://www.uvicorn.org" target="new">
     <img src="https://raw.githubusercontent.com/tomchristie/uvicorn/master/docs/uvicorn.png" width="40px" height="40px" alt="Uvicorn">
 </a>
