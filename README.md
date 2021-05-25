@@ -1,13 +1,13 @@
 # Requirements
 Python 3.6+
 <a href="https://pypi.org/project/fastapi" target="new">
-    <img src="https://img.shields.io/pypi/v/fastapi?color=%2334D058&label=pypi%20package" alt="Package version">
+    <img src="https://img.shields.io/pypi/v/fastapi?color=%2334D058&label=pypi%20package" width="40px" height="40px" alt="Package version">
 </a>
 <a href="https://www.uvicorn.org" target="new">
-    <img src="https://raw.githubusercontent.com/tomchristie/uvicorn/master/docs/uvicorn.png" alt="Uvicorn">
+    <img src="https://raw.githubusercontent.com/tomchristie/uvicorn/master/docs/uvicorn.png" width="40px" height="40px" alt="Uvicorn">
 </a>
 <a href="https://www.docker.com/" target="new">
-    <img src="https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/horizontal-logo-monochromatic-white.png?itok=SBlK2TGU" alt="Docker">
+    <img src="https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/horizontal-logo-monochromatic-white.png?itok=SBlK2TGU" width="40px" height="40px" alt="Docker">
 </a>
 
 # Install Virtualenvironments
