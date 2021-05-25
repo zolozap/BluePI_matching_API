@@ -1,4 +1,5 @@
 import os
+import pymongo
 from pymongo import MongoClient,ReturnDocument
 from typing import Optional, List
 from pydantic import BaseModel
@@ -35,6 +36,13 @@ class User(BaseModel):
 class UserInDB(User):
     hashed_password: str
 
+
+class Cards(BaseModel):
+    click_a: int
+    click_b: int
+
+class Newgame(BaseModel):
+    newgame: bool
 
 def get_db():
     client = MongoClient(os.environ.get('CONNECT_STRING'))
@@ -82,6 +90,56 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-# def records_score(score: int):
-#     db = get_db()
-#     db.score
+def create_or_update_cards(current_user,cards_index_a,cards_index_b,click_counter,your_best_score):
+    # print("DB INPUT",current_user,cards_index_a,cards_index_b,click_counter)
+    db = get_db()
+    now = datetime.now()
+    if your_best_score > 0:
+        your_best_score = your_best_score
+    else:
+        your_best_score = 0
+    objs = {'username':current_user,'cards_index_a':cards_index_a,'cards_index_b':cards_index_b,'matches_values':[],'click_counter':click_counter,'best_click_counter':your_best_score,'created_date':now,'updated_date':now}
+    result = db.cards.find_one_and_update({'username':current_user},{'$set':objs},upsert=True,return_document=ReturnDocument.AFTER)
+    result.pop('_id',None)
+    return result
+
+def get_data_cards(current_user):
+    db = get_db()
+    result = db.cards.find_one({'username':current_user},{'_id':0})
+    return result
+
+def update_click_counter(current_user,click_counter,best_score):
+    db = get_db()
+    # Global best
+    global_best = list(db.cards.find({'best_click_counter':{'$gt':0}},{'_id':0,'best_click_counter':1}).sort('best_click_counter', pymongo.ASCENDING))
+    # print(global_best)
+    if best_score is True:
+        result = db.cards.find_one_and_update({'username':current_user},{'$set':{'click_counter':click_counter,'best_click_counter':click_counter}},projection={'_id':0,'click_counter':1,'best_click_counter':1},upsert=True,return_document=ReturnDocument.AFTER)
+    else:
+        result = db.cards.find_one_and_update({'username':current_user},{'$set':{'click_counter':click_counter}},projection={'_id':0,'click_counter':1,'best_click_counter':1},upsert=True,return_document=ReturnDocument.AFTER)
+    # print(type(result),result)
+    result['global_best_score'] = [gb['best_click_counter'] for gb in global_best][0]
+    return result
+
+def get_or_update_matching(current_user,matches_array,matches_values):
+    db = get_db()
+    now = datetime.now()
+    get_matches_array = db.cards.find_one({'username':current_user},{'_id':0,'matches_values':1,'click_counter':1,'best_click_counter':1})
+    if matches_values:
+        obj_matches_values = {'cards_values':str(matches_values),'cards_index':matches_array}
+        result = db.cards.find_one_and_update({'username':current_user},{'$set':{'updated_date':now},'$addToSet':{'matches_values':obj_matches_values}},projection={'_id':0,'matches_values':1,'click_counter':1,'best_click_counter':1},upsert=True,return_document=ReturnDocument.AFTER)
+    else:
+        result = get_matches_array
+    return result
+
+
+def get_global_score(current_user):
+    db = get_db()
+    result = {}
+    # Global best
+    global_best = list(db.cards.find({'best_click_counter':{'$gt':0}},{'_id':0,'best_click_counter':1}).sort('best_click_counter', pymongo.ASCENDING))
+    result['global_best_score'] = [gb['best_click_counter'] for gb in global_best][0]
+    # Get your best score for new game
+    get_your_best = db.cards.find_one({'username':current_user},{'_id':0,'best_click_counter':1})
+    result['your_best_score'] = get_your_best['best_click_counter']
+    return result

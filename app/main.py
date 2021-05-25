@@ -6,7 +6,8 @@ from fastapi import Depends, FastAPI, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-from database import *
+from .database import *
+from .logic import *
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -85,6 +86,7 @@ async def read_users_me(current_user: User = Depends(get_current_active_user)):
     return current_user
 
 
-# @app.get("/users/me/items/")
-# async def read_own_items(current_user: User = Depends(get_current_active_user)):
-#     return [{"item_id": "Foo", "owner": current_user.username}]
+@app.post("/cards/")
+async def matches_cards(newgame: Newgame, click: Cards, current_user: User = Depends(get_current_active_user)):
+    results = get_card(current_user.username,click,newgame)
+    return results
