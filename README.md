@@ -88,7 +88,17 @@ $ docker build -t bluepi_api .
 <div class="termy">
 
 ```console
-$ docker run -d --name bluepi_api_container -p {{your_port}}:8000 bluepi_api
+$ docker run -d --name bluepi_api_container -p {{your_port}}:8080 bluepi_api
+
+```
+
+</div>
+
+#### Re-Run container ####
+<div class="termy">
+
+```console
+$ docker start bluepi_api_container
 
 ```
 
