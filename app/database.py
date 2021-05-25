@@ -38,11 +38,10 @@ class UserInDB(User):
 
 
 class Cards(BaseModel):
+    new_game: bool
     click_a: int
     click_b: int
 
-class Newgame(BaseModel):
-    newgame: bool
 
 def get_db():
     client = MongoClient(os.environ.get('CONNECT_STRING'))

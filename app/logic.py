@@ -3,25 +3,22 @@ import numpy as np
 from .database import *
 from fastapi import HTTPException
 
-def get_card(current_user,click_index,newgame):
+def get_card(current_user,click_index):
     db = get_db()
     # Define score
     click_counter = 0
     
-    # print(newgame.newgame)
+    print(click_index)
     # New game
-    if newgame.newgame is True:
+    if click_index.new_game is True:
         # Define array cards
         card_a = [i for i in range(1,7)]
         card_b = [i for i in range(1,7)]
         # Shuffle card
         random.shuffle(card_a)
         random.shuffle(card_b)
-        # IF click score update best click
-        # print("LOGIC INPUT",current_user,card_a,card_b,click_counter)
-        # Get global best score
+        # Get global best score and your best score
         global_best_counter = get_global_score(current_user)
-        # print(global_best_counter)
         resp = create_or_update_cards(current_user, card_a, card_b, click_counter, global_best_counter['your_best_score'])
         return {'result':'newgame','current_click_counter':resp['click_counter'], 'your_best_score':resp['best_click_counter'],'global_best_score':global_best_counter['global_best_score']}
     else:

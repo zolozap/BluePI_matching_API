@@ -59,6 +59,12 @@ async def get_current_active_user(current_user: User = Depends(get_current_user)
     return current_user
 
 
+@app.post("/register", status_code=status.HTTP_201_CREATED)
+async def create_new_users(users:User):
+    results = create_users(users.dict())
+    return {'results':results}
+
+
 @app.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password)
@@ -75,18 +81,23 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.post("/register", status_code=status.HTTP_201_CREATED)
-async def create_users_new(users:User):
-    results = create_users(users.dict())
-    return {'results':results}
-
-
-@app.get("/users/me/", response_model=User)
-async def read_users_me(current_user: User = Depends(get_current_active_user)):
+@app.get("/profile/", response_model=User)
+async def read_users_profile(current_user: User = Depends(get_current_active_user)):
+    """
+    **Get user profile**
+    """
     return current_user
 
 
-@app.post("/cards/")
-async def matches_cards(newgame: Newgame, click: Cards, current_user: User = Depends(get_current_active_user)):
-    results = get_card(current_user.username,click,newgame)
+@app.post("/cards/",response_description="Cards parameter, Global best score, Your score")
+async def matches_cards(click: Cards, current_user: User = Depends(get_current_active_user)):
+    """
+    **Start game cards matches**
+
+    - **name_game**: status of start new game, data_type is boolean (true,false) Use **true** for **start new** and Use **false with click_a and click_b** when **game is running..**
+    - **click_a**: array index users first click, data_type is integer (0 - 12)
+    - **click_b**: array index users second click, data_type is integer (0 - 12)
+    - Please see more detail in "Schema"
+    """
+    results = get_card(current_user.username,click)
     return results
