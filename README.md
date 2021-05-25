@@ -1,7 +1,7 @@
 # Requirements
 
-<a href="https://www.python.org/downloads/" target="new">
-    <img src="https://www.python.org/static/img/python-logo@2x.png" width="80px" height="40px" alt="Python 3.6+">
+<a href="https://www.python.org/" target="new">
+    <img src="https://img.shields.io/badge/python-v3.7-blue" alt="Python 3.6+">
 </a>
 <a href="https://pypi.org/project/fastapi" target="new">
     <img src="https://img.shields.io/pypi/v/fastapi?color=%2334D058&label=pypi%20package" alt="Package version">
