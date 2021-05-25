@@ -1,6 +1,5 @@
 # BluePI_test_matching_API
 
-######################################
 # Requirements
 <a href="https://pypi.org/project/fastapi" target="_blank">
     <img src="https://img.shields.io/pypi/v/fastapi?color=%2334D058&label=pypi%20package" alt="Package version">
@@ -53,7 +52,7 @@ $ pip install -r requirements.txt
 
 </div>
 
-#### Deploy manually with Uvicorn ####
+# Deploy manually with Uvicorn
 uvicorn app.main:app --host {{your_host}} --port {{your_port}} --reload <br>
 eg.<br>
 <div class="termy">
@@ -66,11 +65,9 @@ $ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 </div>
 <br>
-######################################
 
-#### Deploy with Docker ####
-# Build docker container
-## Installation
+# Deploy with Docker
+#### Build docker container ####
 
 <div class="termy">
 
@@ -82,7 +79,7 @@ $ docker build -t bluepi_api .
 
 </div>
 
-# Run container
+#### Run container ####
 <div class="termy">
 
 ```console
