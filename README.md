@@ -1,8 +1,13 @@
-# BluePI_test_matching_API
-
 # Requirements
-<a href="https://pypi.org/project/fastapi" target="_blank">
+Python 3.6+
+<a href="https://pypi.org/project/fastapi" target="new">
     <img src="https://img.shields.io/pypi/v/fastapi?color=%2334D058&label=pypi%20package" alt="Package version">
+</a>
+<a href="https://www.uvicorn.org" target="new">
+    <img src="https://raw.githubusercontent.com/tomchristie/uvicorn/master/docs/uvicorn.png" alt="Uvicorn">
+</a>
+<a href="https://www.docker.com/" target="new">
+    <img src="https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/horizontal-logo-monochromatic-white.png?itok=SBlK2TGU" alt="Docker">
 </a>
 
 # Install Virtualenvironments
@@ -12,7 +17,6 @@
 ```console
 $ pip install virtualenv
 
----> 100%
 ```
 
 </div>
@@ -23,7 +27,6 @@ $ pip install virtualenv
 ```console
 $ virtualenv {{env_name}}
 
----> 100%
 ```
 
 </div>
@@ -35,7 +38,6 @@ $ virtualenv {{env_name}}
 ```console
 $ source {{env_name}}/bin/activate
 
----> 100%
 ```
 
 </div>
@@ -47,7 +49,6 @@ $ source {{env_name}}/bin/activate
 ```console
 $ pip install -r requirements.txt
 
----> 100%
 ```
 
 </div>
@@ -60,7 +61,6 @@ eg.<br>
 ```console
 $ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
----> 100%
 ```
 
 </div>
@@ -74,7 +74,6 @@ $ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```console
 $ docker build -t bluepi_api .
 
----> 100%
 ```
 
 </div>
@@ -85,7 +84,6 @@ $ docker build -t bluepi_api .
 ```console
 $ docker run -d --name bluepi_api_container -p {{your_port}}:8000 bluepi_api
 
----> 100%
 ```
 
 </div>
